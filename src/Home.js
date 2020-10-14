@@ -1,7 +1,19 @@
 import React from 'react';
+import {NavigationBar} from "./NavigationBar";
+import './Home.css'
+import {Footer} from "./Footer";
 
 export function Home() {
+
     return (
-        <p> This is Home page</p>
+
+        <div className="Home">
+
+            <NavigationBar />
+
+            <Footer />
+
+        </div>
+
     )
 }
