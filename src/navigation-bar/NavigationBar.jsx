@@ -6,11 +6,7 @@ export function NavigationBar() {
 
         <div className={"Navigation-bar"}>
 
-            <div className={"Navigation-bar-item"}>
-
-                <a href={"#"}> Home</a>
-
-            </div>
+            <p>Navigation bar</p>
 
         </div>
 
