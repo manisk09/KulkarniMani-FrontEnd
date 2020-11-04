@@ -9,12 +9,15 @@ import {NavigationBar} from "./navigation-bar/NavigationBar";
 import {Footer} from "./footer/Footer";
 import {ContactPage} from "./contact-page/ContactPage";
 import {HomePage} from "./home-page/HomePage";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 export default function App() {
 
   return (
 
       <BrowserRouter>
+
+          <CssBaseline />
 
           <div>
 
