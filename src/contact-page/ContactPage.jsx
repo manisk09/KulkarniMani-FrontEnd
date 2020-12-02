@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons"
 import {Button} from "@material-ui/core";
 import Modal from "react-bootstrap/Modal";
+import Axios from 'axios';
 
 const useStyles = makeStyles({
 
@@ -17,8 +18,22 @@ const useStyles = makeStyles({
     messageBox: {
         paddingRight: '20rem',
         paddingTop: '5rem',
-        "& #contactMessage":{
-            background: '#373233'
+        "& input": {
+            width: '20rem',
+            height: '2.5rem',
+            marginLeft:'5px',
+            color: '#eee',
+            background: '#373233',
+            borderStyle: 'solid',
+            borderColor:'#efeaea'
+        },
+        "& textarea": {
+            width: '20rem',
+            marginLeft:'5px',
+            color: '#eee',
+            background: '#373233',
+            borderStyle: 'solid',
+            borderColor:'#efeaea'
         },
         display: 'flex',
         flexDirection: 'column'
@@ -66,6 +81,29 @@ const useStyles = makeStyles({
     centeringModal: {
         position: 'fixed',
         top: '40%'
+    },
+
+    emailAddress: {
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        fontFamily: 'opensans-bold',
+        color: '#EBEEEE',
+        marginBottom:'2rem',
+
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+
+    query: {
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        fontFamily: 'opensans-bold',
+        color: '#EBEEEE',
+
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start'
     }
 
 });
@@ -77,11 +115,42 @@ export function ContactPage() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
+
     const handleShow = () => {
-        setShow(true);
-        setTimeout(handleClose, 5000)
+
+        const message = {email, query};
+
+        // Below axios request to the express server.
+        // Once we get response from server, success message box is displayed.
+        (async () => {
+
+            try {
+
+                console.log(message);
+
+                const result = await Axios.post('/createQuery', message);
+
+                console.log(result);
+
+                setShow(true);
+
+                // To close the message box automatically after 5 secs.
+                setTimeout(handleClose, 5000);
+
+            } catch (err) {
+
+                console.error((err));
+
+            }
+
+        }) ();
     }
 
+    // Below state is to set the latest text in the email text field.
+    const [email, setEmail] = useState("");
+
+    // Below state is to set the latest text in the query text field.
+    const [query, setQuery] = useState("");
 
     return (
 
@@ -89,7 +158,26 @@ export function ContactPage() {
 
             <div className={classes.messageBox}>
 
-                <textarea cols="50" rows="15" id="contactMessage" name="contactMessage"/>
+                <div className={classes.emailAddress}>
+
+                    <h3> Enter your email: </h3>
+
+                    <input type="text"
+                           placeholder={"email"}
+                           onChange={(event) => setEmail(event.target.value)}/>
+
+                </div>
+
+                <div className={classes.query}>
+
+                    <h3> Enter your query: </h3>
+
+                    <textarea
+                        placeholder={"query"}
+                        rows={5}
+                        onChange={(event) => setQuery(event.target.value)}/>
+
+                </div>
 
                 <Button type='submit'
                         className={classes.submit}
@@ -99,31 +187,32 @@ export function ContactPage() {
 
                 </Button>
 
-                <Modal show={show}
-                       onHide={handleClose}
-                       className={classes.centeringModal}>
-
-                    <Modal.Header closeButton>
-
-                        <Modal.Title>Message Box</Modal.Title>
-
-                    </Modal.Header>
-
-                    <Modal.Body>
-
-                        <br/>
-
-                        <h4>
-                            You have successfully submitted a query!
-                        </h4>
-
-                        <br/>
-
-                    </Modal.Body>
-
-                </Modal>
-
             </div>
+
+            <Modal show={show}
+                   onHide={handleClose}
+                   className={classes.centeringModal}>
+
+                <Modal.Header closeButton>
+
+                    <Modal.Title>Message Box</Modal.Title>
+
+                </Modal.Header>
+
+                <Modal.Body>
+
+                    <br/>
+
+                    <h4>
+                        Hi, {email} !! <br />
+                        You have successfully submitted a query!
+                    </h4>
+
+                    <br/>
+
+                </Modal.Body>
+
+            </Modal>
 
             <div className={classes.addressBox}>
 
