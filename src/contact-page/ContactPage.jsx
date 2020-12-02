@@ -204,7 +204,7 @@ export function ContactPage() {
                     <br/>
 
                     <h4>
-                        Hi, {email} !! <br />
+                        Hi, {email} !! <br /><br />
                         You have successfully submitted a query!
                     </h4>
 
