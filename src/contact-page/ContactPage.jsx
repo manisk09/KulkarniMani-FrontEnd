@@ -146,7 +146,7 @@ export function ContactPage() {
         }) ();
     }
 
-    // Below state is to set the latest text in the email text field.
+    // Below state is to set the latest text in the email text field..
     const [email, setEmail] = useState("");
 
     // Below state is to set the latest text in the query text field.
